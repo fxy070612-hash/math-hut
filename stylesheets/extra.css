@@ -1,0 +1,343 @@
+/* =========================================================
+   embar的数学小屋 · 高级深色主题
+   背景：火影夜空全屏展示（docs/assets/bg.jpg）
+   板块：悬浮玻璃卡片，错落分布
+   ========================================================= */
+
+/* ---------- 深色（默认）配色 ---------- */
+[data-md-color-scheme="slate"] {
+  --md-default-bg-color: transparent;
+  --md-primary-fg-color: #4d9fff;
+  --md-primary-fg-color--light: #6db1ff;
+  --md-primary-fg-color--dark:  #2b6cd4;
+  --md-accent-fg-color: #a06bff;
+  --md-default-fg-color: #ffffff;
+  --md-default-fg-color--light: #dfe4f2;
+  --md-default-fg-color--lighter: #b4bdd8;
+  --md-code-bg-color: rgba(13, 17, 32, 0.7);
+  --md-code-fg-color: #d5dcf2;
+  --md-typeset-a-color: #7db4ff;
+  --md-typeset-mark-color: rgba(160, 107, 255, 0.35);
+  --md-admonition-bg-color: rgba(13, 17, 32, 0.6);
+  --md-footer-bg-color: rgba(6, 8, 18, 0.85);
+}
+
+/* ---------- 亮色（备选）---------- */
+[data-md-color-scheme="default"] {
+  --md-default-bg-color: transparent;
+  --md-primary-fg-color: #3b7fdd;
+  --md-accent-fg-color: #7c4dff;
+  --md-default-fg-color: #1a1a2e;
+  --md-default-fg-color--light: #4a5162;
+  --md-code-bg-color: rgba(255, 255, 255, 0.85);
+  --md-code-fg-color: #24292f;
+  --md-typeset-a-color: #2f6fd0;
+}
+
+/* =========================================================
+   背景：火影夜空全屏，只加一层不遮图的深色罩保证可读
+   ========================================================= */
+.md-main {
+  background-color: #0b0f1e;
+  background-image:
+    linear-gradient(rgba(6, 8, 18, 0.44), rgba(6, 8, 18, 0.68)),
+    url("../assets/bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+[data-md-color-scheme="default"] .md-main {
+  background-image:
+    linear-gradient(rgba(12, 16, 34, 0.4), rgba(12, 16, 34, 0.64)),
+    url("../assets/bg.jpg");
+}
+
+/* ---------- 内容区：不再有灰色面板，背景全透出 ---------- */
+.md-content__inner {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0.6rem 0.4rem 1.2rem;
+  margin: 0.4rem 0;
+}
+[data-md-color-scheme="default"] .md-content__inner { background: transparent; }
+
+/* 直接落在背景上的文字，加投影保证可读 */
+.md-content h1, .md-content h2, .md-content h3 {
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+}
+/* 正文强制白色（双保险） */
+[data-md-color-scheme="slate"] .md-content__inner { color: #ffffff; }
+[data-md-color-scheme="slate"] .md-content__inner ul,
+[data-md-color-scheme="slate"] .md-content__inner ol,
+[data-md-color-scheme="slate"] .md-content__inner p,
+[data-md-color-scheme="slate"] .md-typeset h2,
+[data-md-color-scheme="slate"] .md-typeset h3,
+[data-md-color-scheme="slate"] .md-typeset strong,
+[data-md-color-scheme="slate"] .md-typeset blockquote,
+[data-md-color-scheme="slate"] .md-typeset .admonition,
+[data-md-color-scheme="slate"] .md-typeset .admonition-title { color: #ffffff !important; }
+
+/* 全局返回按钮 */
+.page-back {
+  display: inline-block;
+  margin: 0.2rem 0 1rem;
+  padding: 0.35rem 1.05rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+.page-back:hover {
+  background: rgba(109, 177, 255, 0.22);
+  border-color: rgba(109, 177, 255, 0.5);
+}
+[data-md-color-scheme="default"] .page-back {
+  background: rgba(255, 255, 255, 0.85);
+  color: #1a1a2e !important;
+  border-color: rgba(20, 30, 60, 0.15);
+}
+.md-content p, .md-content li, .md-content td, .md-content dd {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+}
+[data-md-color-scheme="default"] .md-content h1,
+[data-md-color-scheme="default"] .md-content h2,
+[data-md-color-scheme="default"] .md-content h3 { text-shadow: 0 1px 8px rgba(30, 40, 90, 0.35); }
+
+/* 顶栏 / 标签栏：半透明磨砂 */
+.md-header, .md-tabs, .md-top {
+  background: rgba(8, 11, 24, 0.55) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+[data-md-color-scheme="default"] .md-header,
+[data-md-color-scheme="default"] .md-tabs { background: rgba(244, 246, 255, 0.6) !important; }
+
+/* 侧边栏：极淡 */
+.md-sidebar__inner {
+  background: transparent;
+  padding: 0.3rem 0.4rem;
+}
+
+/* =========================================================
+   首页 Hero（悬浮玻璃，不遮背景）
+   ========================================================= */
+.math-hero {
+  padding: 3.2rem 2.4rem 2.8rem;
+  margin-bottom: 2.2rem;
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 82% 12%, rgba(77, 159, 255, 0.22), transparent 40%),
+    radial-gradient(circle at 12% 90%, rgba(160, 107, 255, 0.20), transparent 40%),
+    rgba(10, 13, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.math-hero h1 {
+  margin: 0 0 0.8rem;
+  font-size: 2.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+}
+.math-hero .subtitle {
+  color: var(--md-default-fg-color--light);
+  font-size: 1.1rem;
+  margin: 0;
+  line-height: 1.8;
+  max-width: 42rem;
+}
+.math-hero .tags {
+  margin-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.math-hero .tag {
+  padding: 0.28rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--md-default-fg-color--light);
+}
+
+/* =========================================================
+   Bento 错落卡片：每个板块悬浮分布，大小不一、轻微倾斜
+   ========================================================= */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: minmax(120px, auto);
+  gap: 1.1rem;
+  margin: 1.6rem 0 2.4rem;
+  align-items: start;
+}
+.card {
+  position: relative;
+  display: block;
+  padding: 1.6rem 1.6rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(13, 17, 32, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-decoration: none !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transform: translateY(var(--drop, 0)) rotate(var(--tilt, 0deg));
+}
+.card:hover {
+  transform: translateY(-5px) rotate(0deg);
+  border-color: rgba(109, 177, 255, 0.45);
+  background: rgba(18, 24, 46, 0.7);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 主页卡片：纯标题，居中排版 */
+.bento .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.4rem 1.4rem;
+  min-height: 110px;
+}
+.bento .card h3 {
+  margin: 0;
+  font-size: 1.18rem;
+  letter-spacing: 0.02em;
+}
+
+/* 主页底部"这座小屋里有什么"面板 */
+.whats-in {
+  margin-top: 2.4rem;
+  padding: 1.6rem 1.8rem;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(13, 17, 32, 0.5);
+  backdrop-filter: blur(10px);
+}
+.whats-in h2 { margin: 0 0 0.9rem; font-size: 1.15rem; }
+.whats-in ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: var(--md-default-fg-color--light);
+  line-height: 2.1;
+  font-size: 0.92rem;
+}
+.whats-in b { color: #ffffff; font-weight: 600; }
+.card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-shadow: none;
+}
+.card p {
+  margin: 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.card ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+/* 大卡 / 中卡 / 小卡 的占位与错落 */
+.card--lg { grid-column: span 3; --tilt: 0deg; --drop: 0; }
+.card--md { grid-column: span 3; --tilt: -0.6deg; --drop: 6px; }
+.card--sm { grid-column: span 2; }
+.card--full { grid-column: 1 / -1; --tilt: 0deg; }
+.card--sm:nth-child(1) { --tilt: 0.7deg;  --drop: 14px; }
+.card--sm:nth-child(2) { --tilt: -0.5deg; --drop: 4px; }
+.card--sm:nth-child(3) { --tilt: 0.6deg;  --drop: 18px; }
+
+[data-md-color-scheme="default"] .card {
+  background: rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+[data-md-color-scheme="default"] .card:hover {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: #b9d3f5;
+}
+
+/* 响应式：窄屏时全部并排单列 */
+@media (max-width: 900px) {
+  .bento { grid-template-columns: 1fr 1fr; }
+  .card--lg, .card--md, .card--sm { grid-column: span 1; --drop: 0; --tilt: 0deg; }
+}
+@media (max-width: 620px) {
+  .bento { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   板块横幅
+   ========================================================= */
+.math-banner {
+  padding: 2rem 1.9rem;
+  border-radius: 18px;
+  margin-bottom: 2rem;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(77, 159, 255, 0.25), transparent 40%),
+    linear-gradient(120deg, rgba(24, 52, 100, 0.6), rgba(80, 40, 140, 0.55));
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(10px);
+}
+.math-banner h1 { margin: 0; font-size: 1.8rem; letter-spacing: 0.02em; }
+.math-banner p { margin: 0.5rem 0 0; color: var(--md-default-fg-color--light); line-height: 1.7; }
+
+/* =========================================================
+   小工具盒子（计算器、画布）
+   ========================================================= */
+.calc-box {
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  padding: 1.3rem 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(13, 17, 32, 0.6);
+  backdrop-filter: blur(10px);
+}
+.calc-box h3 { margin-top: 0; text-shadow: none; }
+.calc-box input, .calc-box textarea {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 0.4rem 0.6rem;
+  margin: 0.15rem 0.3rem 0.15rem 0;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--md-default-fg-color);
+}
+.calc-box button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.2rem;
+  background: linear-gradient(135deg, #4d9fff, #a06bff);
+  color: #fff;
+  cursor: pointer;
+  margin-top: 0.7rem;
+  font-weight: 500;
+}
+.calc-box canvas { max-width: 100%; border-radius: 10px; }
+
+/* =========================================================
+   排版细节
+   ========================================================= */
+.md-typeset { font-size: 0.82rem; line-height: 1.75; }
+.md-typeset h1 { font-weight: 700; letter-spacing: 0.01em; }
+.md-typeset h2 { font-weight: 600; letter-spacing: 0.02em; }
+.md-typeset h2 .headerlink { color: var(--md-accent-fg-color); }
+.md-typeset table:not([class]) { font-size: 0.78rem; }
+.md-typeset table:not([class]) th { background: rgba(255, 255, 255, 0.06); }
+.md-typeset .admonition { background: rgba(13, 17, 32, 0.72); backdrop-filter: blur(8px); color: #ffffff; border-color: rgba(160, 107, 255, 0.4); }
+::selection { background: rgba(160, 107, 255, 0.3); }

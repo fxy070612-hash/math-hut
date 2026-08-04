@@ -1,0 +1,1777 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="一个热爱数学的少年的学习小屋 —— 记录笔记、反例、好题与成长">
+      
+      
+      
+        <link rel="canonical" href="http://127.0.0.1:8000/toys/visualization/">
+      
+      
+        <link rel="prev" href="../sympy_calculator.html">
+      
+      
+        <link rel="next" href="../../resources/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>3D 画图 - embar的数学小屋</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+SC:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Noto Sans SC";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3d" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="embar的数学小屋" class="md-header__button md-logo" aria-label="embar的数学小屋" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 15H6l7-14v8h5l-7 14z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            embar的数学小屋
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3D 画图
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="purple"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  主页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../courses/" class="md-tabs__link">
+          
+  
+  
+  课程
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../research/" class="md-tabs__link">
+          
+  
+  
+  科研入门
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  数学玩具
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../resources/" class="md-tabs__link">
+          
+  
+  
+  学术资源
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../growth/" class="md-tabs__link">
+          
+  
+  
+  成长时间轴
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../friends/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  友链
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  关于
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="embar的数学小屋" class="md-nav__button md-logo" aria-label="embar的数学小屋" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M11 15H6l7-14v8h5l-7 14z"/></svg>
+
+    </a>
+    embar的数学小屋
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    主页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    课程
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    课程知识库
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学科地图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/problems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    好题墙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    错题本
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../courses/exams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    历年题解
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    科研入门
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    科研入门
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    科研笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/papers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    论文摘要翻译
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/reading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    读书报告
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../research/mentors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    导师与课题组
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    数学玩具
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    数学玩具
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    玩具总览
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sympy_calculator.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    多功能计算器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3D 画图
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    学术资源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    学术资源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    资源导航
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="http://112.124.28.206:86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    书单
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../resources/links/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神器链接
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成长时间轴
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    成长时间轴
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../growth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    成长记录
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../growth/projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    竞赛与项目
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../growth/blog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    博客杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../friends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    友链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="3d">🌀 3D 画图<a class="headerlink" href="#3d" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>写函数画 3D 图。三种模式：<code>z=f(x,y)</code>、参数曲面、隐式方程 <code>f(x,y,z)=0</code>。按住拖动旋转。</p>
+</blockquote>
+<style>
+  .presets { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.7rem; }
+  .presets button {
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    color: inherit;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.13s ease;
+  }
+  .presets button:hover { background: rgba(109, 177, 255, 0.22); border-color: rgba(109, 177, 255, 0.45); }
+  .presets .mode.active {
+    background: linear-gradient(135deg, #4d9fff, #a06bff);
+    color: #fff;
+    border-color: transparent;
+  }
+  .plot-row { display: flex; gap: 0.6rem; align-items: center; margin: 0.4rem 0 0.6rem; }
+  .plot-row label { color: var(--md-default-fg-color--light); font-size: 0.95rem; min-width: 1.6rem; }
+  .plot-row input { flex: 1; }
+  .plot-row input.short { flex: 1.2; }
+  .plot-err { color: #ff9d9d; font-size: 0.85rem; min-height: 1.2em; margin-top: 0.4rem; }
+</style>
+
+<div class="calc-box">
+  <h3>🎨 画一个 3D 图</h3>
+  <p class="hint" style="margin:0 0 0.6rem;color:var(--md-default-fg-color--light);font-size:0.85rem">
+    选模式 → 写函数或点预设 → 回车或点"生成"；x² 写 x*x 或 x**2，π 写 pi
+  </p>
+
+  <div class="presets" id="mode-btns">
+    <button type="button" class="mode active" data-mode="explicit">z = f(x, y)</button>
+    <button type="button" class="mode" data-mode="param">参数曲面</button>
+    <button type="button" class="mode" data-mode="implicit">隐式方程</button>
+  </div>
+
+  <!-- 显式模式 -->
+  <div id="explicit-box">
+    <div class="presets">
+      <button type="button" onclick="loadFn('sin(x)*cos(y)')">波浪 sin(x)·cos(y)</button>
+      <button type="button" onclick="loadFn('sin(x) + sin(y)')">起伏 sin(x)+sin(y)</button>
+      <button type="button" onclick="loadFn('x*x + y*y')">抛物面 x²+y²</button>
+      <button type="button" onclick="loadFn('x*x - y*y')">马鞍面 x²−y²</button>
+      <button type="button" onclick="loadFn('sqrt(9 - x*x - y*y)')">半球 √(9−x²−y²)</button>
+      <button type="button" onclick="loadFn('sqrt(x*x + y*y)')">锥面 √(x²+y²)</button>
+      <button type="button" onclick="loadFn('atan2(y, x)')">螺旋面 atan2(y,x)</button>
+      <button type="button" onclick="loadFn('exp(-x*x - y*y)')">小山丘 e^(−x²−y²)</button>
+      <button type="button" onclick="loadFn('sin(sqrt(x*x + y*y))')">水波纹</button>
+      <button type="button" onclick="loadFn('exp(-(x-1.2)**2 - y*y) + exp(-(x+1.2)**2 - y*y)')">双峰</button>
+    </div>
+    <div class="plot-row">
+      <label>z =</label>
+      <input id="fn3d" value="sin(x)*cos(y)">
+      <button type="button" onclick="renderPlot()">生成</button>
+    </div>
+  </div>
+
+  <!-- 参数模式 -->
+  <div id="param-box" style="display:none">
+    <div class="presets">
+      <button type="button" onclick="loadParam('(3+cos(v))*cos(u)','(3+cos(v))*sin(u)','sin(v)','0, 6.283','0, 6.283')">环面</button>
+      <button type="button" onclick="loadParam('3*sin(v)*cos(u)','3*sin(v)*sin(u)','3*cos(v)','0, 6.283','0, 3.142')">球面</button>
+      <button type="button" onclick="loadParam('2*cos(u)','2*sin(u)','v','0, 6.283','0, 4')">圆柱</button>
+      <button type="button" onclick="loadParam('v*cos(u)','v*sin(u)','v','0, 6.283','0, 3')">圆锥</button>
+      <button type="button" onclick="loadParam('(2+v*cos(u/2))*cos(u)','(2+v*cos(u/2))*sin(u)','v*sin(u/2)','0, 6.283','-0.6, 0.6')">莫比乌斯带</button>
+      <button type="button" onclick="loadParam('(2+0.6*cos(v))*cos(u)','(2+0.6*cos(v))*sin(u)','0.6*sin(v)+u*0.5','0, 12.57','0, 6.283')">螺旋管</button>
+    </div>
+    <div class="plot-row"><label>x =</label><input id="px" value="(3+cos(v))*cos(u)"></div>
+    <div class="plot-row"><label>y =</label><input id="py" value="(3+cos(v))*sin(u)"></div>
+    <div class="plot-row"><label>z =</label><input id="pz" value="sin(v)"></div>
+    <div class="plot-row">
+      <label>u:</label><input class="short" id="ur" value="0, 6.283">
+      <label>v:</label><input class="short" id="vr" value="0, 6.283">
+      <button type="button" onclick="renderPlot()">生成</button>
+    </div>
+  </div>
+
+  <!-- 隐式模式 -->
+  <div id="implicit-box" style="display:none">
+    <div class="presets">
+      <button type="button" onclick="loadImp('x*x + y*y + z*z - 9')">球面</button>
+      <button type="button" onclick="loadImp('x*x/4 + y*y/9 + z*z - 1')">椭球</button>
+      <button type="button" onclick="loadImp('x*x + y*y - 1')">圆柱</button>
+      <button type="button" onclick="loadImp('x*x + y*y - z*z')">双锥</button>
+      <button type="button" onclick="loadImp('x*x + y*y - z*z - 1')">单叶双曲面</button>
+      <button type="button" onclick="loadImp('x*x + y*y - z*z + 1')">双叶双曲面</button>
+      <button type="button" onclick="loadImp('(sqrt(x*x + y*y) - 3)**2 + z*z - 1')">环面</button>
+      <button type="button" onclick="loadImp('(x*x + y*y + z*z - 1)**3 - x*x*z**3 - y*y*z**3', 2.4)">心脏曲面</button>
+    </div>
+    <div class="plot-row">
+      <label>f =</label>
+      <input id="imp-f" value="x*x + y*y + z*z - 9">
+      <button type="button" onclick="renderPlot()">生成</button>
+    </div>
+    <div class="plot-row">
+      <label>范围 ±</label>
+      <input class="short" id="imp-r" value="3">
+    </div>
+  </div>
+
+  <canvas id="plot3d" width="640" height="460" style="cursor:grab"></canvas>
+  <p class="hint" style="margin-top:0.5rem;color:var(--md-default-fg-color--light);font-size:0.82rem">🖱 按住拖动旋转 · 回车或点"生成"重画</p>
+  <p class="plot-err" id="plot3d-err"></p>
+</div>
+
+<script>
+(function () {
+  const cv = document.getElementById("plot3d");
+  if (!cv) return;
+  const ctx = cv.getContext("2d");
+  const W = cv.width, H = cv.height;
+  const errEl = document.getElementById("plot3d-err");
+  const inp = document.getElementById("fn3d");
+  const px = document.getElementById("px"), py = document.getElementById("py"), pz = document.getElementById("pz");
+  const urEl = document.getElementById("ur"), vrEl = document.getElementById("vr");
+  const impF = document.getElementById("imp-f"), impR = document.getElementById("imp-r");
+  let currentMode = "explicit";
+  let ax = 0.6, ay = 0.6;
+  let drag = null;
+
+  function makeFn(expr, vars) {
+    try {
+      const f = new Function(vars[0], vars[1], "with(Math){return (" + expr + ")}");
+      return function (a, b) {
+        const v = f(a, b);
+        return (typeof v === "number" && isFinite(v)) ? v : NaN;
+      };
+    } catch (e) { return null; }
+  }
+  function makeFn3(expr) {
+    try {
+      const f = new Function("x", "y", "z", "with(Math){return (" + expr + ")}");
+      return function (a, b, c) {
+        const v = f(a, b, c);
+        return (typeof v === "number" && isFinite(v)) ? v : NaN;
+      };
+    } catch (e) { return null; }
+  }
+  function parseRange(s) {
+    const parts = String(s).split(",").map(parseFloat);
+    return [parts[0] || 0, parts[1] || 6.283185307179586];
+  }
+
+  function colorFor(t) {
+    const stops = [[30, 136, 229], [124, 77, 255], [255, 120, 200]];
+    const x = Math.max(0, Math.min(1, t)) * (stops.length - 1);
+    const i = Math.min(stops.length - 2, Math.floor(x));
+    const f = x - i;
+    const c = stops[i], d = stops[i + 1];
+    return "rgb(" + Math.round(c[0] + (d[0] - c[0]) * f) + "," +
+      Math.round(c[1] + (d[1] - c[1]) * f) + "," +
+      Math.round(c[2] + (d[2] - c[2]) * f) + ")";
+  }
+
+  // ====== 行军四面体：从隐式函数提取三角网格 ======
+  const TETRAS = [
+    [0, 1, 3, 7], [0, 3, 2, 7], [0, 2, 6, 7],
+    [0, 6, 4, 7], [0, 4, 5, 7], [0, 5, 1, 7]
+  ];
+  const CORNERS = [[0, 0, 0], [1, 0, 0], [0, 1, 0], [1, 1, 0], [0, 0, 1], [1, 0, 1], [0, 1, 1], [1, 1, 1]];
+
+  function tetraTriangles(v, p) {
+    const below = [v[0] < 0, v[1] < 0, v[2] < 0, v[3] < 0];
+    const cnt = (below[0] ? 1 : 0) + (below[1] ? 1 : 0) + (below[2] ? 1 : 0) + (below[3] ? 1 : 0);
+    if (cnt === 0 || cnt === 4) return [];
+    const b = [], a = [];
+    for (let i = 0; i < 4; i++) (below[i] ? b : a).push(i);
+    function interpP(pi, vi, pj, vj) {
+      const t = (0 - vi) / (vj - vi);
+      return [pi[0] + (pj[0] - pi[0]) * t, pi[1] + (pj[1] - pi[1]) * t, pi[2] + (pj[2] - pi[2]) * t];
+    }
+    if (cnt === 1) {
+      const B = b[0];
+      const es = a.map(function (i) { return interpP(p[B], v[B], p[i], v[i]); });
+      return [[es[0], es[1], es[2]]];
+    }
+    if (cnt === 3) {
+      const A = a[0];
+      const es = b.map(function (i) { return interpP(p[A], v[A], p[i], v[i]); });
+      return [[es[0], es[1], es[2]]];
+    }
+    const eA = interpP(p[b[0]], v[b[0]], p[a[0]], v[a[0]]);
+    const eB = interpP(p[b[0]], v[b[0]], p[a[1]], v[a[1]]);
+    const eC = interpP(p[b[1]], v[b[1]], p[a[0]], v[a[0]]);
+    const eD = interpP(p[b[1]], v[b[1]], p[a[1]], v[a[1]]);
+    return [[eA, eC, eD], [eA, eD, eB]];
+  }
+
+  // ====== 主渲染 ======
+  function renderPlot() {
+    errEl.textContent = "";
+    let faces = [];   // 所有三角形（世界坐标）
+
+    if (currentMode === "explicit") {
+      let expr = inp.value.trim();
+      if (!expr) { errEl.textContent = "先写一个函数，比如 sin(x)*cos(y)"; return; }
+      expr = expr.replace(/\^/g, "**").replace(/\bpi\b/g, "PI");
+      const fn = makeFn(expr, ["x", "y"]);
+      if (!fn) { errEl.textContent = "表达式无法解析，试试 sin(x)*cos(y)"; return; }
+      const N = 40, R = 3;
+      const world = [];
+      for (let i = 0; i <= N; i++) {
+        const row = [];
+        for (let j = 0; j <= N; j++) {
+          const x = -R + 2 * R * i / N, y = -R + 2 * R * j / N;
+          const z = fn(x, y);
+          row.push([x, y, isFinite(z) ? z : 0]);
+        }
+        world.push(row);
+      }
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+        const c = [world[i][j], world[i + 1][j], world[i + 1][j + 1], world[i][j + 1]];
+        faces.push([c[0], c[1], c[2]], [c[0], c[2], c[3]]);
+      }
+    } else if (currentMode === "param") {
+      const fx = makeFn(px.value.trim(), ["u", "v"]);
+      const fy = makeFn(py.value.trim(), ["u", "v"]);
+      const fz = makeFn(pz.value.trim(), ["u", "v"]);
+      if (!fx || !fy || !fz) { errEl.textContent = "参数式无法解析，试试点【环面】预设"; return; }
+      const ru = parseRange(urEl.value), rv = parseRange(vrEl.value);
+      const N = 40;
+      const world = [];
+      for (let i = 0; i <= N; i++) {
+        const row = [];
+        const u = ru[0] + (ru[1] - ru[0]) * i / N;
+        for (let j = 0; j <= N; j++) {
+          const v = rv[0] + (rv[1] - rv[0]) * j / N;
+          const x = fx(u, v), y = fy(u, v), z = fz(u, v);
+          row.push([isFinite(x) ? x : 0, isFinite(y) ? y : 0, isFinite(z) ? z : 0]);
+        }
+        world.push(row);
+      }
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) {
+        const c = [world[i][j], world[i + 1][j], world[i + 1][j + 1], world[i][j + 1]];
+        faces.push([c[0], c[1], c[2]], [c[0], c[2], c[3]]);
+      }
+    } else {
+      let expr = impF.value.trim();
+      if (!expr) { errEl.textContent = "先写一个隐式方程，比如 x*x + y*y + z*z - 9"; return; }
+      expr = expr.replace(/\^/g, "**").replace(/\bpi\b/g, "PI");
+      const fn = makeFn3(expr);
+      if (!fn) { errEl.textContent = "方程无法解析，试试点【球面】预设"; return; }
+      const R = parseFloat(impR.value) || 3;
+      const N = 15, h = 2 * R / N;
+      const gv = [];
+      for (let i = 0; i <= N; i++)
+        for (let j = 0; j <= N; j++)
+          for (let k = 0; k <= N; k++) {
+            const x = -R + i * h, y = -R + j * h, z = -R + k * h;
+            gv.push(isFinite(fn(x, y, z)) ? fn(x, y, z) : 1);
+          }
+      const W2 = (N + 1);
+      for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) for (let k = 0; k < N; k++) {
+        const v = [], p = [];
+        for (let cIdx = 0; cIdx < 8; cIdx++) {
+          const d = CORNERS[cIdx];
+          const gx = i + d[0], gy = j + d[1], gz = k + d[2];
+          v.push(gv[(gx * W2 + gy) * W2 + gz]);
+          p.push([-R + gx * h, -R + gy * h, -R + gz * h]);
+        }
+        for (let tIdx = 0; tIdx < 6; tIdx++) {
+          const tet = TETRAS[tIdx];
+          const tv = tet.map(function (a) { return v[a]; });
+          const tp = tet.map(function (a) { return p[a]; });
+          const tris = tetraTriangles(tv, tp);
+          for (let m = 0; m < tris.length; m++) faces.push(tris[m]);
+        }
+      }
+    }
+
+    // 旋转 + 排序 + 绘制
+    function rot(x, y, z) {
+      const x1 = x * Math.cos(ax) + z * Math.sin(ax);
+      const z1 = -x * Math.sin(ax) + z * Math.cos(ax);
+      const y1 = y * Math.cos(ay) - z1 * Math.sin(ay);
+      const z2 = y * Math.sin(ay) + z1 * Math.cos(ay);
+      return [x1, y1, z2];
+    }
+    const scale = currentMode === "implicit" ? 60 : 78;
+    function toScreen(p) { return [W / 2 + p[0] * scale, H / 2 - p[1] * scale]; }
+
+    const prep = faces.map(function (f) {
+      const rp = f.map(function (p) { return rot(p[0], p[1], p[2]); });
+      return {
+        screen: rp.map(toScreen),
+        depth: (rp[0][2] + rp[1][2] + rp[2][2]) / 3,
+        zsum: f[0][2] + f[1][2] + f[2][2]
+      };
+    });
+    let zmin = Infinity, zmax = -Infinity;
+    prep.forEach(function (q) {
+      if (q.zsum < zmin) zmin = q.zsum;
+      if (q.zsum > zmax) zmax = q.zsum;
+    });
+    if (zmax - zmin < 1e-9) zmax = zmin + 1;
+
+    prep.sort(function (a, b) { return b.depth - a.depth; });
+    ctx.clearRect(0, 0, W, H);
+    prep.forEach(function (q) {
+      const t = (q.zsum - zmin) / (zmax - zmin);
+      ctx.beginPath();
+      ctx.moveTo(q.screen[0][0], q.screen[0][1]);
+      ctx.lineTo(q.screen[1][0], q.screen[1][1]);
+      ctx.lineTo(q.screen[2][0], q.screen[2][1]);
+      ctx.closePath();
+      ctx.fillStyle = colorFor(t);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(0,0,0,0.15)";
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    });
+  }
+
+  // 模式切换
+  document.querySelectorAll(".mode").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll(".mode").forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      currentMode = btn.dataset.mode;
+      document.getElementById("explicit-box").style.display = currentMode === "explicit" ? "" : "none";
+      document.getElementById("param-box").style.display = currentMode === "param" ? "" : "none";
+      document.getElementById("implicit-box").style.display = currentMode === "implicit" ? "" : "none";
+      renderPlot();
+    });
+  });
+
+  // 拖动旋转
+  cv.addEventListener("mousedown", function (e) {
+    drag = { x: e.clientX, y: e.clientY, ax: ax, ay: ay };
+    cv.style.cursor = "grabbing";
+  });
+  window.addEventListener("mousemove", function (e) {
+    if (!drag) return;
+    ay = drag.ay + (e.clientX - drag.x) * 0.008;
+    ax = drag.ax + (e.clientY - drag.y) * 0.008;
+    renderPlot();
+  });
+  window.addEventListener("mouseup", function () {
+    drag = null;
+    cv.style.cursor = "grab";
+  });
+
+  inp.addEventListener("keydown", function (e) { if (e.key === "Enter") renderPlot(); });
+  [px, py, pz, urEl, vrEl, impF].forEach(function (el) {
+    el.addEventListener("keydown", function (e) { if (e.key === "Enter") renderPlot(); });
+  });
+
+  window.renderPlot = renderPlot;
+  window.loadFn = function (s) { inp.value = s; renderPlot(); };
+  window.loadParam = function (x, y, z, u, v) {
+    px.value = x; py.value = y; pz.value = z;
+    if (u) urEl.value = u;
+    if (v) vrEl.value = v;
+    renderPlot();
+  };
+  window.loadImp = function (s, r) {
+    impF.value = s;
+    if (r) impR.value = r;
+    renderPlot();
+  };
+
+  renderPlot();
+})();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../sympy_calculator.html" class="md-footer__link md-footer__link--prev" aria-label="上一页: 多功能计算器">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                多功能计算器
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../resources/" class="md-footer__link md-footer__link--next" aria-label="下一页: 资源导航">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                资源导航
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © embar
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.instant", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+      
+        <script src="https://registry.npmmirror.com/mermaid/11.16.0/files/dist/mermaid.min.js"></script>
+      
+        <script src="../../javascripts/mermaid-init.js"></script>
+      
+        <script src="../../javascripts/back-button.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>多功能计算器</title>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]], displayMath: [["$$", "$$"], ["\\[", "\\]"]] }
+};
+</script>
+<script src="https://cdn.staticfile.org/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+
+<style>
+  :root {
+    --blue: #4d9fff;
+    --purple: #a06bff;
+    --bg: #0b0f1e;
+    --panel: #12182e;
+    --text: #e8ecf7;
+    --muted: #aab3cc;
+    --line: rgba(255, 255, 255, 0.1);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+    background-color: #0b0f1e;
+    background-image:
+      linear-gradient(rgba(8, 10, 22, 0.50), rgba(8, 10, 22, 0.72)),
+      radial-gradient(circle at 80% 10%, rgba(77, 159, 255, 0.10), transparent 45%),
+      radial-gradient(circle at 15% 90%, rgba(160, 107, 255, 0.10), transparent 45%),
+      url("../assets/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  .back {
+    display: inline-block;
+    margin-bottom: 1.2rem;
+    padding: 0.4rem 1.1rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+  .back:hover { color: #fff; border-color: rgba(109, 177, 255, 0.4); background: rgba(255, 255, 255, 0.12); }
+  header { text-align: center; margin-bottom: 1.6rem; }
+  header h1 { margin: 0 0 0.4rem; font-size: 1.9rem; letter-spacing: 0.03em; }
+  header p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+  #engine-status {
+    margin: 1rem auto 0;
+    padding: 0.55rem 1.2rem;
+    border-radius: 999px;
+    display: inline-block;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--line);
+    color: var(--muted);
+  }
+  #engine-status.ready { color: #8fe3a8; border-color: rgba(143, 227, 168, 0.4); }
+  #engine-status.error { color: #ff9d9d; border-color: rgba(255, 157, 157, 0.4); }
+
+  .tabs {
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+  }
+  .tab {
+    padding: 0.5rem 1.3rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+  .tab.active {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    border-color: transparent;
+  }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .calc-box {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 1.6rem;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+  }
+  .calc-box h3 { margin: 0 0 0.2rem; font-size: 1.05rem; }
+  .calc-box .desc { color: var(--muted); font-size: 0.85rem; margin: 0.2rem 0 0.9rem; }
+
+  .field { margin-bottom: 0.7rem; }
+  .field label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .field input {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    font-size: 0.95rem;
+    font-family: "JetBrains Mono", monospace, inherit;
+  }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+
+  /* ---------- 按键输入面板 ---------- */
+  .sym-pad {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.55rem 0 0.7rem;
+  }
+  .sym-pad button.sym {
+    min-width: 2.3rem;
+    padding: 0.42rem 0.7rem;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--text);
+    font-size: 0.92rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.13s ease;
+    line-height: 1.2;
+  }
+  .sym-pad button.sym:hover {
+    background: linear-gradient(135deg, rgba(77, 159, 255, 0.35), rgba(160, 107, 255, 0.35));
+    border-color: rgba(160, 107, 255, 0.5);
+    transform: translateY(-1px);
+  }
+  .sym-pad .pad-label {
+    width: 100%;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.1rem;
+  }
+
+  /* 实时预览 */
+  .preview {
+    margin: 0.2rem 0 0.9rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 9px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px dashed rgba(255, 255, 255, 0.14);
+    font-size: 1.02rem;
+    min-height: 2.1rem;
+  }
+  .preview .err { color: #ff9d9d; font-size: 0.85rem; }
+  .preview .note { color: var(--muted); font-size: 0.82rem; }
+
+  button.run {
+    margin-top: 0.3rem;
+    padding: 0.55rem 1.6rem;
+    border-radius: 999px;
+    border: none;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  button.run:disabled { opacity: 0.4; cursor: not-allowed; }
+  #out {
+    margin-top: 1.3rem;
+    padding: 1.2rem 1.4rem;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--line);
+    min-height: 60px;
+    font-size: 1.05rem;
+    overflow-x: auto;
+  }
+  #out .err { color: #ff9d9d; }
+  #out .note { color: var(--muted); font-size: 0.88rem; margin-top: 0.5rem; }
+  #out .ok-mark { color: #8fe3a8; }
+  footer { text-align: center; margin-top: 2.2rem; color: var(--muted); font-size: 0.8rem; }
+  @media (max-width: 600px) {
+    .row2 { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="../">&larr; 返回玩具总览</a>
+
+  <header>
+    <h1>⚡ 多功能计算器</h1>
+    <p>积分、极限、级数、行列式、求导、方程、泰勒展开。</p>
+    <div id="engine-status">正在加载数学引擎…（首次需下载约 10MB，请耐心）</div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="integral">不定积分</button>
+    <button class="tab" data-tab="limit">极限</button>
+    <button class="tab" data-tab="series">级数求和</button>
+    <button class="tab" data-tab="det">行列式</button>
+    <button class="tab" data-tab="defint">定积分</button>
+    <button class="tab" data-tab="deriv">求导</button>
+    <button class="tab" data-tab="solve">方程</button>
+    <button class="tab" data-tab="taylor">泰勒展开</button>
+  </nav>
+
+  <!-- ============ 不定积分 ============ -->
+  <section class="panel active" id="panel-integral">
+    <div class="calc-box">
+      <h3>不定积分</h3>
+      <p class="desc">点下面按键拼出被积函数（也可以直接打字），下方实时预览。</p>
+      <div class="sym-pad" id="pad-int"></div>
+      <div class="field">
+        <label>被积函数 f(x)</label>
+        <input id="int-expr" value="x**2 + sin(x)">
+      </div>
+      <div class="preview" id="pv-int"><span class="note">预览会显示在这里</span></div>
+      <button class="run" id="btn-integral">计算 ∫ f(x) dx</button>
+    </div>
+  </section>
+
+  <!-- ============ 极限 ============ -->
+  <section class="panel" id="panel-limit">
+    <div class="calc-box">
+      <h3>极限</h3>
+      <p class="desc">点按键拼式子；未定式也能给出精确结果（∞ 用 oo）。</p>
+      <div class="sym-pad" id="pad-lim"></div>
+      <div class="field">
+        <label>表达式 f(x)</label>
+        <input id="lim-expr" value="sin(x)/x">
+      </div>
+      <div class="preview" id="pv-lim"><span class="note">预览会显示在这里</span></div>
+      <div class="row2">
+        <div class="field">
+          <label>趋近值</label>
+          <input id="lim-val" value="0">
+        </div>
+        <div class="field">
+          <label>变量</label>
+          <input id="lim-var" value="x">
+        </div>
+      </div>
+      <div class="sym-pad">
+        <div class="pad-label">趋近值按键</div>
+        <button class="sym" onclick="ins('lim-val','0')">0</button>
+        <button class="sym" onclick="ins('lim-val','oo')">∞</button>
+        <button class="sym" onclick="ins('lim-val','-oo')">−∞</button>
+        <button class="sym" onclick="ins('lim-val','pi')">π</button>
+        <button class="sym" onclick="ins('lim-val','pi/2')">π/2</button>
+        <button class="sym" onclick="ins('lim-val','1')">1</button>
+        <button class="sym" onclick="ins('lim-val','-1')">−1</button>
+      </div>
+      <button class="run" id="btn-limit">计算极限</button>
+    </div>
+  </section>
+
+  <!-- ============ 级数求和 ============ -->
+  <section class="panel" id="panel-series">
+    <div class="calc-box">
+      <h3>级数求和</h3>
+      <p class="desc">收敛则返回精确闭式（如 1/n² → π²/6）；无法求和使用 Sum 表示。</p>
+      <div class="sym-pad" id="pad-ser"></div>
+      <div class="field">
+        <label>通项 a(n)</label>
+        <input id="ser-expr" value="1/n**2">
+      </div>
+      <div class="preview" id="pv-ser"><span class="note">预览会显示在这里</span></div>
+      <div class="row2">
+        <div class="field"><label>起始值</label><input id="ser-start" value="1"></div>
+        <div class="field"><label>终止值（∞ 写 oo）</label><input id="ser-end" value="oo"></div>
+      </div>
+      <div class="sym-pad">
+        <div class="pad-label">起始 / 终止值按键</div>
+        <button class="sym" onclick="ins('ser-start','1')">1</button>
+        <button class="sym" onclick="ins('ser-start','2')">2</button>
+        <button class="sym" onclick="ins('ser-start','0')">0</button>
+        <button class="sym" onclick="ins('ser-end','oo')">∞</button>
+        <button class="sym" onclick="ins('ser-end','10')">10</button>
+        <button class="sym" onclick="ins('ser-end','n')">n</button>
+      </div>
+      <button class="run" id="btn-series">计算 Σ</button>
+    </div>
+  </section>
+
+  <!-- ============ 行列式 ============ -->
+  <section class="panel" id="panel-det">
+    <div class="calc-box">
+      <h3>行列式</h3>
+      <p class="desc">点下面的模板自动生成矩阵，也可以直接输入。</p>
+      <div class="sym-pad">
+        <div class="pad-label">矩阵模板</div>
+        <button class="sym" onclick="ins('det-expr','[[1,0],[0,1]]')">2×2 单位阵</button>
+        <button class="sym" onclick="ins('det-expr','[[1,2],[3,4]]')">2×2 示例</button>
+        <button class="sym" onclick="ins('det-expr','[[1,0,0],[0,1,0],[0,0,1]]')">3×3 单位阵</button>
+        <button class="sym" onclick="ins('det-expr','[[a,b],[c,d]]')">2×2 字母</button>
+        <button class="sym" onclick="ins('det-expr','[[1,2,3],[4,5,6],[7,8,9]]')">3×3 示例</button>
+      </div>
+      <div class="field">
+        <label>矩阵（Python 列表格式，行与行之间用逗号分隔）</label>
+        <input id="det-expr" value="[[1,2],[3,4]]">
+      </div>
+      <div class="preview" id="pv-det"><span class="note">预览会显示在这里</span></div>
+      <button class="run" id="btn-det">计算行列式</button>
+    </div>
+  </section>
+
+  <!-- ============ 定积分 ============ -->
+  <section class="panel" id="panel-defint">
+    <div class="calc-box">
+      <h3>定积分</h3>
+      <p class="desc">上下限可写 oo（∞）、pi（π）或数字。</p>
+      <div class="sym-pad" id="pad-defint"></div>
+      <div class="field">
+        <label>被积函数 f(x)</label>
+        <input id="defint-expr" value="exp(-x**2)">
+      </div>
+      <div class="preview" id="pv-defint"><span class="note">预览会显示在这里</span></div>
+      <div class="row2">
+        <div class="field"><label>下限 a</label><input id="defint-a" value="0"></div>
+        <div class="field"><label>上限 b</label><input id="defint-b" value="oo"></div>
+      </div>
+      <div class="sym-pad">
+        <div class="pad-label">上下限按键</div>
+        <button class="sym" onclick="ins('defint-a','0')">0</button>
+        <button class="sym" onclick="ins('defint-a','1')">1</button>
+        <button class="sym" onclick="ins('defint-b','oo')">∞</button>
+        <button class="sym" onclick="ins('defint-b','pi')">π</button>
+        <button class="sym" onclick="ins('defint-b','1')">1</button>
+        <button class="sym" onclick="ins('defint-b','2')">2</button>
+      </div>
+      <button class="run" id="btn-defint">计算 ∫ f(x) dx</button>
+    </div>
+  </section>
+
+  <!-- ============ 求导 ============ -->
+  <section class="panel" id="panel-deriv">
+    <div class="calc-box">
+      <h3>求导</h3>
+      <p class="desc">可求任意阶导数。</p>
+      <div class="sym-pad" id="pad-deriv"></div>
+      <div class="field">
+        <label>函数 f(x)</label>
+        <input id="deriv-expr" value="x**3 + sin(x)">
+      </div>
+      <div class="preview" id="pv-deriv"><span class="note">预览会显示在这里</span></div>
+      <div class="field">
+        <label>阶数（默认 1）</label>
+        <input id="deriv-n" value="1">
+      </div>
+      <button class="run" id="btn-deriv">求导</button>
+    </div>
+  </section>
+
+  <!-- ============ 方程求解 ============ -->
+  <section class="panel" id="panel-solve">
+    <div class="calc-box">
+      <h3>方程求解</h3>
+      <p class="desc">写 0 也行，如 x**2 - 2 = 0 或直接 x**2 - 2。</p>
+      <div class="sym-pad" id="pad-solve"></div>
+      <div class="field">
+        <label>方程（变量 x）</label>
+        <input id="solve-expr" value="x**2 - 2 = 0">
+      </div>
+      <div class="preview" id="pv-solve"><span class="note">预览会显示在这里</span></div>
+      <button class="run" id="btn-solve">求解</button>
+    </div>
+  </section>
+
+  <!-- ============ 泰勒展开 ============ -->
+  <section class="panel" id="panel-taylor">
+    <div class="calc-box">
+      <h3>泰勒展开</h3>
+      <p class="desc">在指定点展开到指定阶。</p>
+      <div class="sym-pad" id="pad-taylor"></div>
+      <div class="field">
+        <label>函数 f(x)</label>
+        <input id="taylor-expr" value="exp(x)">
+      </div>
+      <div class="preview" id="pv-taylor"><span class="note">预览会显示在这里</span></div>
+      <div class="row2">
+        <div class="field"><label>展开点 x₀（默认 0）</label><input id="taylor-x0" value="0"></div>
+        <div class="field"><label>阶数（默认 5）</label><input id="taylor-n" value="5"></div>
+      </div>
+      <button class="run" id="btn-taylor">泰勒展开</button>
+    </div>
+  </section>
+
+  <div id="out"><span class="note">结果会显示在这里。</span></div>
+
+  <footer>精确符号计算，一键出结果</footer>
+</div>
+
+<script>
+  // ====== Tab 切换 ======
+  document.querySelectorAll(".tab").forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      document.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("active"); });
+      document.querySelectorAll(".panel").forEach(function (p) { p.classList.remove("active"); });
+      tab.classList.add("active");
+      document.getElementById("panel-" + tab.dataset.tab).classList.add("active");
+    });
+  });
+
+  // ====== 引擎 ======
+  const statusEl = document.getElementById("engine-status");
+  let pyodide = null, engineReady = false;
+
+  async function initEngine() {
+    statusEl.textContent = "正在加载 Python 运行环境…";
+    try {
+      pyodide = await loadPyodide();
+      statusEl.textContent = "正在加载 SymPy（约 10MB）…";
+      await pyodide.loadPackage("sympy");
+      pyodide.runPython([
+        "import sympy as sp",
+        "import json",
+        "def _friendly(e):",
+        "    s = str(e)",
+        "    if 'sympify' in s.lower():",
+        "        return '表达式无法解析：点下面按键拼式子，或检查语法（x² 写 x**2，π 写 pi，∞ 写 oo）'",
+        "    if 'invalid syntax' in s:",
+        "        return '输入格式有误：请检查语法'",
+        "    return '计算出错：' + s",
+        "def _vmatrix(M):",
+        "    rows = M.tolist()",
+        "    body = ' \\\\\\\\ '.join(' & '.join(sp.latex(c) for c in row) for row in rows)",
+        "    return '\\\\begin{vmatrix}' + body + '\\\\end{vmatrix}'"
+      ].join("\n"));
+      engineReady = true;
+      statusEl.textContent = "数学引擎就绪 ✓";
+      statusEl.classList.add("ready");
+      document.querySelectorAll("button.run").forEach(function (b) { b.disabled = false; });
+      refreshAllPreviews();
+    } catch (e) {
+      statusEl.textContent = "数学引擎加载失败（多半是网络无法访问 CDN）。刷新重试，或检查代理设置。";
+      statusEl.classList.add("error");
+      console.error(e);
+    }
+  }
+
+  async function runPy(code) {
+    if (!engineReady) { showErr("数学引擎还在加载，请稍候…"); return null; }
+    try { return JSON.parse(pyodide.runPython(code)); }
+    catch (e) { showErr("执行出错：" + (e.message || e)); return null; }
+  }
+
+  const out = document.getElementById("out");
+  function showHTML(html) { out.innerHTML = html; MathJax.typesetPromise([out]).catch(function () {}); }
+  function showErr(msg) { out.innerHTML = '<span class="err">⚠ ' + msg + "</span>"; }
+
+  // ====== 按键插入 ======
+  function ins(id, text) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const s = el.selectionStart || el.value.length;
+    const e = el.selectionEnd || s;
+    el.setRangeText(text, s, e, "end");
+    el.focus();
+    const caret = s + text.length;
+    el.setSelectionRange(caret, caret);
+    el.dispatchEvent(new Event("input"));
+  }
+  function addBtn(container, label, insert, tip) {
+    const b = document.createElement("button");
+    b.className = "sym";
+    b.textContent = label;
+    if (tip) b.title = tip;
+    b.addEventListener("click", function () { ins(container.dataset.target, insert); });
+    container.appendChild(b);
+  }
+  function makePad(id, target, groups) {
+    const pad = document.getElementById(id);
+    pad.dataset.target = target;
+    groups.forEach(function (g) {
+      if (g.label) {
+        const l = document.createElement("div");
+        l.className = "pad-label";
+        l.textContent = g.label;
+        pad.appendChild(l);
+      }
+      g.buttons.forEach(function (b) { addBtn(pad, b[0], b[1], b[2]); });
+    });
+  }
+
+  // 函数按钮（点击后光标停在括号里）
+  function addFn(pad, label, fnName) {
+    const b = document.createElement("button");
+    b.className = "sym";
+    b.textContent = label;
+    b.addEventListener("click", function () {
+      const el = document.getElementById(pad.dataset.target);
+      const s = el.selectionStart || el.value.length;
+      el.setRangeText(fnName + "(", s, s, "end");
+      el.focus();
+      el.setSelectionRange(s + fnName.length + 1, s + fnName.length + 1);
+      el.dispatchEvent(new Event("input"));
+    });
+    pad.appendChild(b);
+  }
+  function makePadFn(id, target, fnList) {
+    const pad = document.getElementById(id);
+    pad.dataset.target = target;
+    fnList.forEach(function (f) { addFn(pad, f[0], f[1]); });
+  }
+
+  // 表达式按键组
+  makePad("pad-int", "int-expr", [
+    { label: "变量与数字", buttons: [
+      ["x", "x"], ["n", "n"], ["0", "0"], ["1", "1"], ["2", "2"], ["π", "pi"], ["e", "e"]
+    ]},
+    { label: "运算", buttons: [
+      ["+", "+"], ["−", "-"], ["×", "*"], ["÷", "/"], ["(", "("], [")", ")"], ["^", "**"]
+    ]},
+    { label: "常用式子", buttons: [
+      ["x²", "x**2"], ["x³", "x**3"], ["1/x", "1/x"], ["x/(x+1)", "x/(x+1)"], ["√x", "sqrt(x)"]
+    ]}
+  ]);
+  makePadFn("pad-int", "int-expr", [
+    ["sin", "sin"], ["cos", "cos"], ["tan", "tan"], ["eˣ", "exp"],
+    ["ln", "log"], ["√", "sqrt"], ["| |", "abs"], ["1/x", "1/"]
+  ]);
+
+  makePad("pad-lim", "lim-expr", [
+    { label: "变量与数字", buttons: [
+      ["x", "x"], ["n", "n"], ["0", "0"], ["1", "1"], ["2", "2"], ["π", "pi"]
+    ]},
+    { label: "运算", buttons: [
+      ["+", "+"], ["−", "-"], ["×", "*"], ["÷", "/"], ["(", "("], [")", ")"], ["^", "**"]
+    ]},
+    { label: "常用式子", buttons: [
+      ["sin(x)/x", "sin(x)/x"], ["(1+1/x)^x", "(1+1/x)**x"], ["(1-cos(x))/x²", "(1-cos(x))/x**2"], ["(1+1/n)^n", "(1+1/n)**n"]
+    ]}
+  ]);
+  makePadFn("pad-lim", "lim-expr", [
+    ["sin", "sin"], ["cos", "cos"], ["tan", "tan"], ["eˣ", "exp"], ["ln", "log"], ["√", "sqrt"]
+  ]);
+
+  makePad("pad-ser", "ser-expr", [
+    { label: "变量与数字", buttons: [
+      ["n", "n"], ["k", "k"], ["1", "1"], ["2", "2"], ["π", "pi"]
+    ]},
+    { label: "运算", buttons: [
+      ["+", "+"], ["−", "-"], ["×", "*"], ["÷", "/"], ["(", "("], [")", ")"], ["^", "**"]
+    ]},
+    { label: "常用式子", buttons: [
+      ["1/n²", "1/n**2"], ["1/n", "1/n"], ["(-1)ⁿ/n", "(-1)**n/n"], ["1/2ⁿ", "1/2**n"], ["1/n!", "1/factorial(n)"], ["xⁿ/n!", "x**n/factorial(n)"]
+    ]}
+  ]);
+  makePadFn("pad-ser", "ser-expr", [
+    ["sin", "sin"], ["cos", "cos"], ["ln", "log"], ["eˣ", "exp"], ["√", "sqrt"], ["(-1)ⁿ", "(-1)**n"]
+  ]);
+
+  // ====== 共用按键组（新功能面板复用）======
+  var GROUPS_BASIC = [
+    { label: "变量与数字", buttons: [
+      ["x", "x"], ["n", "n"], ["0", "0"], ["1", "1"], ["2", "2"], ["π", "pi"], ["e", "e"]
+    ]},
+    { label: "运算", buttons: [
+      ["+", "+"], ["−", "-"], ["×", "*"], ["÷", "/"], ["(", "("], [")", ")"], ["^", "**"]
+    ]},
+    { label: "常用式子", buttons: [
+      ["x²", "x**2"], ["x³", "x**3"], ["1/x", "1/x"], ["eˣ", "exp(x)"], ["√x", "sqrt(x)"], ["sin(x)", "sin(x)"], ["cos(x)", "cos(x)"], ["ln(x)", "log(x)"]
+    ]}
+  ];
+  var FNS_BASIC = [
+    ["sin", "sin"], ["cos", "cos"], ["tan", "tan"], ["eˣ", "exp"], ["ln", "log"], ["√", "sqrt"], ["| |", "abs"]
+  ];
+
+  makePad("pad-defint", "defint-expr", GROUPS_BASIC);
+  makePadFn("pad-defint", "defint-expr", FNS_BASIC);
+  makePad("pad-deriv", "deriv-expr", GROUPS_BASIC);
+  makePadFn("pad-deriv", "deriv-expr", FNS_BASIC);
+  makePad("pad-taylor", "taylor-expr", GROUPS_BASIC);
+  makePadFn("pad-taylor", "taylor-expr", FNS_BASIC);
+  makePad("pad-solve", "solve-expr", [
+    { label: "变量与数字", buttons: [
+      ["x", "x"], ["0", "0"], ["1", "1"], ["2", "2"], ["π", "pi"]
+    ]},
+    { label: "运算与等号", buttons: [
+      ["+", "+"], ["−", "-"], ["×", "*"], ["÷", "/"], ["(", "("], [")", ")"], ["^", "**"], ["=", " = "]
+    ]},
+    { label: "常用方程", buttons: [
+      ["x²-2=0", "x**2 - 2 = 0"], ["x²+x-1=0", "x**2 + x - 1 = 0"], ["sin(x)=0", "sin(x) = 0"], ["x²=2", "x**2 = 2"], ["x³=8", "x**3 = 8"]
+    ]}
+  ]);
+
+  // ====== 实时预览 ======
+  function exprPreviewPy(v) {
+    return "try:\n" +
+      "    r = {'ok': True, 'latex': sp.latex(sp.sympify(" + JSON.stringify(v) + "))}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)";
+  }
+  function detPreviewPy(v) {
+    return "import ast\n" +
+      "try:\n" +
+      "    rows = ast.literal_eval(" + JSON.stringify(v) + ")\n" +
+      "    M = sp.Matrix(rows)\n" +
+      "    r = {'ok': True, 'latex': _vmatrix(M)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)";
+  }
+  function solvePreviewPy(v) {
+    return "try:\n" +
+      "    parts = " + JSON.stringify(v) + ".split('=')\n" +
+      "    if len(parts) == 2:\n" +
+      "        lhs, rhs = sp.sympify(parts[0]), sp.sympify(parts[1])\n" +
+      "    else:\n" +
+      "        lhs, rhs = sp.sympify(" + JSON.stringify(v) + "), sp.Integer(0)\n" +
+      "    r = {'ok': True, 'latex': sp.latex(sp.Eq(lhs, rhs))}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)";
+  }
+
+  const timers = {};
+  function setupPreview(inputId, previewId, pyFn) {
+    const inp = document.getElementById(inputId), pv = document.getElementById(previewId);
+    inp.addEventListener("input", function () {
+      clearTimeout(timers[inputId]);
+      timers[inputId] = setTimeout(function () { doPreview(inp, pv, pyFn); }, 350);
+    });
+  }
+  async function doPreview(inp, pv, pyFn) {
+    const v = inp.value.trim();
+    if (!v) { pv.innerHTML = ""; return; }
+    if (!engineReady) { pv.innerHTML = '<span class="note">引擎加载后显示预览…</span>'; return; }
+    try {
+      const r = JSON.parse(pyodide.runPython(pyFn(v)));
+      if (r.ok) {
+        pv.innerHTML = "预览　\\( " + r.latex + " \\)";
+        MathJax.typesetPromise([pv]).catch(function () {});
+      } else {
+        pv.innerHTML = '<span class="err">' + r.error + "</span>";
+      }
+    } catch (e) { pv.innerHTML = ""; }
+  }
+  function refreshAllPreviews() {
+    [["int-expr", "pv-int", exprPreviewPy],
+     ["lim-expr", "pv-lim", exprPreviewPy],
+     ["ser-expr", "pv-ser", exprPreviewPy],
+     ["det-expr", "pv-det", detPreviewPy],
+    ["defint-expr", "pv-defint", exprPreviewPy],
+    ["deriv-expr", "pv-deriv", exprPreviewPy],
+    ["solve-expr", "pv-solve", solvePreviewPy],
+    ["taylor-expr", "pv-taylor", exprPreviewPy]].forEach(function (t) {
+      doPreview(document.getElementById(t[0]), document.getElementById(t[1]), t[2]);
+    });
+  }
+
+  setupPreview("int-expr", "pv-int", exprPreviewPy);
+  setupPreview("lim-expr", "pv-lim", exprPreviewPy);
+  setupPreview("ser-expr", "pv-ser", exprPreviewPy);
+  setupPreview("det-expr", "pv-det", detPreviewPy);
+  setupPreview("defint-expr", "pv-defint", exprPreviewPy);
+  setupPreview("deriv-expr", "pv-deriv", exprPreviewPy);
+  setupPreview("solve-expr", "pv-solve", solvePreviewPy);
+  setupPreview("taylor-expr", "pv-taylor", exprPreviewPy);
+
+  // ====== 计算 ======
+  document.getElementById("btn-integral").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("int-expr").value.trim());
+    const r = await runPy(
+      "x = sp.Symbol('x')\n" +
+      "try:\n" +
+      "    f = sp.sympify(" + expr + ")\n" +
+      "    F = sp.integrate(f, x)\n" +
+      "    ok = sp.simplify(sp.diff(F, x) - f) == 0\n" +
+      "    r = {'ok': True, 'itg': sp.latex(sp.Integral(f, x)), 'res': sp.latex(F) + ' + C', 'd': sp.latex(sp.diff(F, x)), 'okd': bool(ok)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML(
+      "$$ " + r.itg + " = " + r.res + " $$\n" +
+      '<div class="note">验证：对结果求导得 <span class="ok-mark">$\\dfrac{d}{dx}\\left(' + r.res + '\\right) = ' + r.d +
+      "$</span>" + (r.okd ? " ✓ 与被积函数一致" : "（注意：简化器未完全匹配，请人工核对）") + "</div>"
+    );
+  });
+
+  document.getElementById("btn-limit").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("lim-expr").value.trim());
+    const val = JSON.stringify(document.getElementById("lim-val").value.trim() || "0");
+    const v = JSON.stringify(document.getElementById("lim-var").value.trim() || "x");
+    const r = await runPy(
+      "x = sp.Symbol(" + v + ")\n" +
+      "try:\n" +
+      "    f = sp.sympify(" + expr + ")\n" +
+      "    t = sp.sympify(" + val + ")\n" +
+      "    L = sp.limit(f, x, t)\n" +
+      "    r = {'ok': True, 'lim': sp.latex(sp.Limit(f, x, t)), 'res': sp.latex(L)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.lim + " = " + r.res + " $$");
+  });
+
+  document.getElementById("btn-series").addEventListener("click", async function () {
+    const term = JSON.stringify(document.getElementById("ser-expr").value.trim());
+    const st = JSON.stringify(document.getElementById("ser-start").value.trim() || "1");
+    const en = JSON.stringify(document.getElementById("ser-end").value.trim() || "oo");
+    const r = await runPy(
+      "n = sp.Symbol('n')\n" +
+      "try:\n" +
+      "    a = sp.sympify(" + term + ")\n" +
+      "    lo = sp.Integer(" + st + ")\n" +
+      "    hi = sp.sympify(" + en + ")\n" +
+      "    S = sp.Sum(a, (n, lo, hi))\n" +
+      "    try:\n" +
+      "        res = S.doit()\n" +
+      "    except Exception:\n" +
+      "        res = S\n" +
+      "    summed = not res.equals(S)\n" +
+      "    r = {'ok': True, 'S': sp.latex(S), 'res': sp.latex(res), 'summed': bool(summed)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML(
+      "$$ " + r.S + " = " + r.res + " $$" +
+      '<div class="note">' + (r.summed
+        ? '<span class="ok-mark">✓ 已求出精确闭式解</span>'
+        : "SymPy 未能求出闭式（该级数可能发散或超出算法能力），以上为 Sum 的原始形式。") + "</div>"
+    );
+  });
+
+  document.getElementById("btn-det").addEventListener("click", async function () {
+    const m = JSON.stringify(document.getElementById("det-expr").value.trim());
+    const r = await runPy(
+      "import ast\n" +
+      "try:\n" +
+      "    rows = ast.literal_eval(" + m + ")\n" +
+      "    if not isinstance(rows, list) or len(rows) == 0 or not isinstance(rows[0], list):\n" +
+      "        raise ValueError('请按 [[1,2],[3,4]] 格式输入矩阵')\n" +
+      "    M = sp.Matrix(rows)\n" +
+      "    d = M.det()\n" +
+      "    r = {'ok': True, 'M': _vmatrix(M), 'det': sp.latex(d)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.M + " = " + r.det + " $$");
+  });
+
+  // ====== 定积分 ======
+  document.getElementById("btn-defint").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("defint-expr").value.trim());
+    const a = JSON.stringify(document.getElementById("defint-a").value.trim() || "0");
+    const b = JSON.stringify(document.getElementById("defint-b").value.trim() || "oo");
+    const r = await runPy(
+      "x = sp.Symbol('x')\n" +
+      "try:\n" +
+      "    f = sp.sympify(" + expr + ")\n" +
+      "    lo = sp.sympify(" + a + "); hi = sp.sympify(" + b + ")\n" +
+      "    I = sp.integrate(f, (x, lo, hi))\n" +
+      "    r = {'ok': True, 'itg': sp.latex(sp.Integral(f, (x, lo, hi))), 'res': sp.latex(I)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.itg + " = " + r.res + " $$");
+  });
+
+  // ====== 求导 ======
+  document.getElementById("btn-deriv").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("deriv-expr").value.trim());
+    const n = JSON.stringify(document.getElementById("deriv-n").value.trim() || "1");
+    const r = await runPy(
+      "x = sp.Symbol('x')\n" +
+      "try:\n" +
+      "    f = sp.sympify(" + expr + ")\n" +
+      "    k = sp.Integer(" + n + ")\n" +
+      "    d = sp.diff(f, x, k)\n" +
+      "    r = {'ok': True, 'd': sp.latex(sp.Derivative(f, x, k)), 'res': sp.latex(sp.simplify(d))}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.d + " = " + r.res + " $$");
+  });
+
+  // ====== 方程求解 ======
+  document.getElementById("btn-solve").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("solve-expr").value.trim());
+    const r = await runPy(
+      "x = sp.Symbol('x')\n" +
+      "try:\n" +
+      "    parts = " + expr + ".split('=')\n" +
+      "    if len(parts) == 2:\n" +
+      "        lhs, rhs = sp.sympify(parts[0]), sp.sympify(parts[1])\n" +
+      "    else:\n" +
+      "        lhs, rhs = sp.sympify(" + expr + "), sp.Integer(0)\n" +
+      "    eq = sp.Eq(lhs, rhs)\n" +
+      "    sol = sp.solve(eq, x)\n" +
+      "    r = {'ok': True, 'eq': sp.latex(eq), 'res': sp.latex(sol)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.eq + " \\quad\\Rightarrow\\quad x = " + r.res + " $$");
+  });
+
+  // ====== 泰勒展开 ======
+  document.getElementById("btn-taylor").addEventListener("click", async function () {
+    const expr = JSON.stringify(document.getElementById("taylor-expr").value.trim());
+    const x0 = JSON.stringify(document.getElementById("taylor-x0").value.trim() || "0");
+    const n = JSON.stringify(document.getElementById("taylor-n").value.trim() || "5");
+    const r = await runPy(
+      "x = sp.Symbol('x')\n" +
+      "try:\n" +
+      "    f = sp.sympify(" + expr + ")\n" +
+      "    c = sp.sympify(" + x0 + "); k = sp.Integer(" + n + ")\n" +
+      "    s = sp.series(f, x, c, k)\n" +
+      "    r = {'ok': True, 'res': sp.latex(s)}\n" +
+      "except Exception as e:\n" +
+      "    r = {'ok': False, 'error': _friendly(e)}\n" +
+      "json.dumps(r)"
+    );
+    if (!r) return;
+    if (!r.ok) { showErr(r.error); return; }
+    showHTML("$$ " + r.res + " $$");
+  });
+
+  initEngine();
+</script>
+</body>
+</html>

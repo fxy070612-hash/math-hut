@@ -1,0 +1,51 @@
+/* ===== 网站密码锁样式 ===== */
+#site-lock {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(8, 10, 22, 0.85), rgba(8, 10, 22, 0.92)),
+    url("../assets/bg.jpg") center / cover no-repeat fixed;
+}
+.lock-box {
+  text-align: center;
+  width: 300px;
+  padding: 2.6rem 2.4rem;
+  border-radius: 18px;
+  background: rgba(13, 17, 32, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(12px);
+}
+.lock-icon { font-size: 2.8rem; line-height: 1; }
+.lock-title { font-size: 1.3rem; margin: 0.7rem 0 0.2rem; color: #ffffff; letter-spacing: 0.03em; }
+.lock-sub { color: #aab3cc; font-size: 0.9rem; margin-bottom: 1.3rem; }
+#lock-pass {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font-size: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 0.8rem;
+  font-family: inherit;
+}
+#lock-pass:focus { outline: none; border-color: rgba(109, 177, 255, 0.6); }
+#lock-btn {
+  width: 100%;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #4d9fff, #a06bff);
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+#lock-btn:hover { opacity: 0.92; }
+#lock-err { color: #ff9d9d; font-size: 0.85rem; margin-top: 0.7rem; min-height: 1.1em; }
