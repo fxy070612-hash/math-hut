@@ -1,8 +1,8 @@
 // 给所有内容页顶部注入一个"← 返回"按钮
 document$.subscribe(function () {
-  // 主页不加
+  // 主页不加（含子路径 /xxx/ 的情况）
   var path = window.location.pathname;
-  if (path === "/" || path.endsWith("/index.html")) return;
+  if (path === "/" || path.endsWith("/index.html") || path.endsWith("/")) return;
   if (document.getElementById("page-back")) return;
 
   var inner = document.querySelector(".md-content__inner");
