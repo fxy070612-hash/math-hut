@@ -375,3 +375,74 @@
     0 18px 45px rgba(77,159,255,.20),
     0 0 0 1px rgba(77,159,255,.25);
 }
+
+/* ===== 未来感 · 霓虹版（明显版） ===== */
+
+/* Hero：霓虹渐变标题 */
+.math-hero h1 {
+  background: linear-gradient(120deg, #4d9fff, #a06bff, #37e6ff, #4d9fff);
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-grad 6s ease infinite;
+  filter: drop-shadow(0 0 18px rgba(77,159,255,.35));
+}
+@keyframes hero-grad {
+  0%, 100% { background-position: 0% 0; }
+  50%      { background-position: 100% 0; }
+}
+
+/* Hero：流动霓虹光晕 */
+.math-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.math-hero::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  background: conic-gradient(from 0deg,
+    rgba(77,159,255,.28), rgba(160,107,255,.22),
+    rgba(55,230,255,.14), rgba(77,159,255,.28));
+  animation: hero-spin 18s linear infinite;
+  filter: blur(34px);
+}
+@keyframes hero-spin { to { transform: rotate(360deg); } }
+
+/* Hero 光带扫过 */
+.math-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.06) 50%, transparent 60%);
+  background-size: 250% 100%;
+  animation: sheen 7s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes sheen {
+  0%, 100% { background-position: 120% 0; }
+  50%      { background-position: -20% 0; }
+}
+
+/* 卡片：霓虹边缘 + 悬浮强光 */
+.card {
+  border: 1px solid rgba(120,180,255,.28);
+}
+.card:hover {
+  border-color: rgba(77,159,255,.75);
+  box-shadow:
+    0 0 22px rgba(77,159,255,.35),
+    0 0 0 1px rgba(77,159,255,.3),
+    0 18px 45px rgba(0,0,0,.45);
+}
+
+/* 板块标题也带点霓虹 */
+.whats-in h2 {
+  background: linear-gradient(90deg, #4d9fff, #a06bff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
