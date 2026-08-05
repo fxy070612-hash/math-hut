@@ -7,19 +7,19 @@
 /* ---------- 深色（默认）配色 · Mocha 精致调 ---------- */
 [data-md-color-scheme="slate"] {
   --md-default-bg-color: transparent;
-  --md-primary-fg-color: #89b4fa;
-  --md-primary-fg-color--light: #b4befe;
-  --md-primary-fg-color--dark: #74c7ec;
-  --md-accent-fg-color: #cba6f7;
-  --md-default-fg-color: #e6e9f5;
-  --md-default-fg-color--light: #a6adc8;
-  --md-default-fg-color--lighter: #7f849c;
-  --md-code-bg-color: rgba(30, 30, 46, 0.85);
-  --md-code-fg-color: #d5dff5;
-  --md-typeset-a-color: #89b4fa;
-  --md-typeset-mark-color: rgba(203, 166, 247, 0.35);
-  --md-admonition-bg-color: rgba(30, 30, 46, 0.7);
-  --md-footer-bg-color: rgba(24, 24, 37, 0.9);
+  --md-primary-fg-color: #4d9fff;
+  --md-primary-fg-color--light: #6db1ff;
+  --md-primary-fg-color--dark:  #2b6cd4;
+  --md-accent-fg-color: #a06bff;
+  --md-default-fg-color: #ffffff;
+  --md-default-fg-color--light: #dfe4f2;
+  --md-default-fg-color--lighter: #b4bdd8;
+  --md-code-bg-color: rgba(13, 17, 32, 0.7);
+  --md-code-fg-color: #d5dcf2;
+  --md-typeset-a-color: #7db4ff;
+  --md-typeset-mark-color: rgba(160, 107, 255, 0.35);
+  --md-admonition-bg-color: rgba(13, 17, 32, 0.6);
+  --md-footer-bg-color: rgba(6, 8, 18, 0.85);
 }
 
 /* ---------- 亮色（备选）---------- */
@@ -342,9 +342,7 @@
 .md-typeset .admonition { background: rgba(13, 17, 32, 0.72); backdrop-filter: blur(8px); color: #ffffff; border-color: rgba(160, 107, 255, 0.4); }
 ::selection { background: rgba(160, 107, 255, 0.3); }
 
-/* ===== 未来感特效（克制版，不遮背景） ===== */
-
-/* Hero 顶部微光流动 */
+/* ===== 未来感特效（蓝紫调，克制不遮背景） ===== */
 .math-hero {
   position: relative;
   overflow: hidden;
@@ -354,8 +352,8 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(115deg,
-    transparent 30%, rgba(137,180,250,.10) 45%,
-    rgba(203,166,247,.10) 55%, transparent 70%);
+    transparent 30%, rgba(77,159,255,.10) 45%,
+    rgba(160,107,255,.10) 55%, transparent 70%);
   background-size: 250% 100%;
   animation: sheen 7s ease-in-out infinite;
   pointer-events: none;
@@ -364,8 +362,6 @@
   0%, 100% { background-position: 120% 0; }
   50%      { background-position: -20% 0; }
 }
-
-/* 卡片：更精致玻璃 + 悬浮发光 */
 .card {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -374,8 +370,8 @@
 }
 .card:hover {
   transform: translateY(-6px);
-  border-color: rgba(137,180,250,.55);
+  border-color: rgba(109,177,255,.55);
   box-shadow:
-    0 18px 45px rgba(137,180,250,.20),
-    0 0 0 1px rgba(137,180,250,.25);
+    0 18px 45px rgba(77,159,255,.20),
+    0 0 0 1px rgba(77,159,255,.25);
 }
