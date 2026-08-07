@@ -698,6 +698,18 @@
       
         
       
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
     
     
     
@@ -854,6 +866,174 @@
     
   
     第 4 章 · 工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 5 章 · Coding Agent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 6 章 · Agent 的评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 7 章 · 模型后训练
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 8 章 · 持续进化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 9 章 · 多模态与实时交互
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    第 10 章 · 多 Agent 协作
   
 
     
@@ -1627,30 +1807,49 @@
 <summary>为什么这三件套这么重要？</summary>
 <p>模型只负责"想"，要想得准，得让它 <strong>看得到</strong>（上下文里要有足够信息）；想干实事，得让它 <strong>够得着</strong>（有工具能改变世界）。很多看起来"模型不够聪明"的问题，其实只是"看得不够多"或"够得着的东西太少"——把信息装进上下文、把操作封装成工具，任务就变得可解了。</p>
 </details>
-<h2 id="_1">🗺️ 入门学习路径<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>前四章是全书最基础的部分，建议按顺序过一遍（每一页都是 5 分钟能读完的可视化摘要）：</p>
-<pre class="mermaid"><code>flowchart LR
-  A[第 1 章 · Agent 基础&lt;br/&gt;难度 入门] --&gt; B[第 2 章 · 上下文工程&lt;br/&gt;难度 入门]
-  B --&gt; C[第 3 章 · 记忆与知识库&lt;br/&gt;难度 进阶]
-  C --&gt; D[第 4 章 · 工具&lt;br/&gt;难度 进阶]
+<h2 id="_1">🗺️ 全书学习路径<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>全 10 章都有可视化摘要（每页 5 分钟能读完），建议按顺序过一遍。⭐ 越多越深：入门 → 进阶 → 高级 → 专家 → 应用。</p>
+<pre class="mermaid"><code>flowchart TD
+  A[第 1 章 · Agent 基础 ⭐ 入门] --&gt; B[第 2 章 · 上下文工程 ⭐ 入门]
+  B --&gt; C[第 3 章 · 记忆与知识库 ⭐⭐ 进阶]
+  C --&gt; D[第 4 章 · 工具 ⭐⭐ 进阶]
+  D --&gt; E[第 5 章 · Coding Agent ⭐⭐⭐ 高级]
+  E --&gt; F[第 6 章 · Agent 的评估 ⭐⭐⭐ 高级]
+  F --&gt; G[第 7 章 · 模型后训练 ⭐⭐⭐⭐ 专家]
+  G --&gt; H[第 8 章 · 持续进化 ⭐⭐⭐⭐ 专家]
+  H --&gt; I[第 9 章 · 多模态与实时交互 ⭐⭐⭐⭐⭐ 应用]
+  I --&gt; J[第 10 章 · 多 Agent 协作 ⭐⭐⭐⭐⭐ 应用]
   style A fill:#4d9fff33,stroke:#4d9fff
-  style B fill:#a06bff33,stroke:#a06bff
-  style C fill:#3ddc9733,stroke:#3ddc97
-  style D fill:#ffb84d33,stroke:#ffb84d</code></pre>
+  style B fill:#4d9fff33,stroke:#4d9fff
+  style C fill:#a06bff33,stroke:#a06bff
+  style D fill:#a06bff33,stroke:#a06bff
+  style E fill:#3ddc9733,stroke:#3ddc97
+  style F fill:#3ddc9733,stroke:#3ddc97
+  style G fill:#ffb84d33,stroke:#ffb84d
+  style H fill:#ffb84d33,stroke:#ffb84d
+  style I fill:#ff7d4d33,stroke:#ff7d4d
+  style J fill:#ff7d4d33,stroke:#ff7d4d</code></pre>
 <h2 id="_2">📖 章节地图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <div class="bento">
- <a class="card card--sm" href="ch1/"><h3>第 1 章 · Agent 基础</h3><p>核心公式 · 大脑/眼睛/手脚 · ReAct 循环 · Harness</p></a>
+ <a class="card card--sm" href="ch1/"><h3>第 1 章 · Agent 基础</h3><p>核心公式 · 大脑/眼睛/手脚 · ReAct · Harness</p></a>
  <a class="card card--sm" href="ch2/"><h3>第 2 章 · 上下文工程</h3><p>上下文是眼睛 · API 消息 · 提示词 · KV Cache</p></a>
  <a class="card card--sm" href="ch3/"><h3>第 3 章 · 记忆与知识库</h3><p>用户记忆 · RAG · 知识图谱</p></a>
  <a class="card card--sm" href="ch4/"><h3>第 4 章 · 工具</h3><p>五类工具 · MCP · 设计原则</p></a>
+ <a class="card card--sm" href="ch5/"><h3>第 5 章 · Coding Agent</h3><p>通用内核 · 七核心工具 · 代码=元能力</p></a>
+ <a class="card card--sm" href="ch6/"><h3>第 6 章 · Agent 的评估</h3><p>评估三层次 · 模型+Harness · LLM 当评委</p></a>
+ <a class="card card--sm" href="ch7/"><h3>第 7 章 · 模型后训练</h3><p>预训练/SFT/RL · SFT记忆 · RL泛化</p></a>
+ <a class="card card--sm" href="ch8/"><h3>第 8 章 · 持续进化</h3><p>保存≠学习 · 三层验证 · 四种更新</p></a>
+ <a class="card card--sm" href="ch9/"><h3>第 9 章 · 多模态与实时交互</h3><p>语音三范式 · Computer Use · 机器人</p></a>
+ <a class="card card--sm" href="ch10/"><h3>第 10 章 · 多 Agent 协作</h3><p>群体智能 · 共享上下文 · 通信机制</p></a>
 </div>
 
 <h2 id="_3">💡 新手怎么读<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>先把上面的<strong>互动演示</strong>玩一遍，对 Agent 的运行有个直觉</li>
-<li>然后按 1 → 2 → 3 → 4 顺序，每页花 5 分钟过一遍可视化摘要</li>
+<li>然后按 1 → 10 顺序，每页花 5 分钟过一遍可视化摘要</li>
+<li>时间有限的话，<strong>优先 1-4 章</strong>（入门+进阶，概念地基）；5-8 章偏工程和模型，9-10 章是前沿应用，可以后面再补</li>
 <li>每页末尾都有<strong>深挖</strong>链接，想细读时点回原书对应章节</li>
-<li>每章开头标了难度：⭐ 入门，⭐⭐ 进阶</li>
+<li>每章开头标了难度：⭐ 入门 → ⭐⭐⭐⭐⭐ 应用</li>
 </ul>
 <div class="dig-deeper">
 <h4>📚 关于这套笔记</h4>
