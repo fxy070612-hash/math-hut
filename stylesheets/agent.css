@@ -122,6 +122,84 @@
 }
 .chapter-nav .nav-next { margin-left: auto; }
 
+/* ---------- 书籍封面横幅 ---------- */
+.book-cover {
+  margin: 1.3rem 0 1.8rem;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+}
+.book-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------- 分篇目录标题 ---------- */
+.part-head {
+  margin: 1.6rem 0 0.6rem;
+  padding-bottom: 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #6db1ff;
+  border-bottom: 1px solid rgba(109, 177, 255, 0.25);
+}
+.part-head .part-desc {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--md-default-fg-color--light);
+  margin-left: 0.5rem;
+}
+
+/* ---------- 推荐语 ---------- */
+.testimony {
+  margin: 1.2rem 0;
+  padding: 1.1rem 1.4rem;
+  border-left: 3px solid #a06bff;
+  border-radius: 0 12px 12px 0;
+  background: rgba(13, 17, 32, 0.5);
+  backdrop-filter: blur(8px);
+}
+.testimony p {
+  margin: 0 0 0.4rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--md-default-fg-color--light);
+}
+.testimony .who {
+  font-size: 0.78rem;
+  color: #c8a6ff;
+  font-style: normal;
+}
+
+/* ---------- 资源下载卡片 ---------- */
+.res-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.9rem;
+  margin: 1.2rem 0;
+}
+.res-links a {
+  display: block;
+  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+.res-links a:hover {
+  border-color: rgba(109, 177, 255, 0.5);
+  background: rgba(109, 177, 255, 0.12);
+  transform: translateY(-2px);
+}
+.res-links a .res-title { font-weight: 600; font-size: 0.9rem; display: block; }
+.res-links a .res-sub { font-size: 0.76rem; color: var(--md-default-fg-color--lighter); display: block; margin-top: 0.2rem; }
+
 /* ---------- 深挖条 ---------- */
 .dig-deeper {
   margin: 1.4rem 0;
