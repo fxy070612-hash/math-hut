@@ -1,0 +1,248 @@
+/* =========================================================
+   AI Agent 板块 · 专属样式
+   配套 extra.css 的玻璃态体系，只新增不覆盖
+   ========================================================= */
+
+/* ---------- 概念卡片网格（每章核心概念） ---------- */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+  margin: 1.4rem 0 2rem;
+}
+.concept-card {
+  padding: 1.2rem 1.3rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(13, 17, 32, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.concept-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(109, 177, 255, 0.45);
+}
+.concept-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #6db1ff;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.concept-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.75;
+  color: var(--md-default-fg-color--light);
+}
+.concept-card .tag {
+  font-size: 0.68rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(160, 107, 255, 0.18);
+  border: 1px solid rgba(160, 107, 255, 0.35);
+  color: #c8a6ff;
+  margin-left: 0.15rem;
+  white-space: nowrap;
+}
+
+/* ---------- 书的插图：白底圆角容器 ---------- */
+.book-fig {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 0.8rem 0.8rem 0.55rem;
+  margin: 1.3rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+.book-fig img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+.book-fig .fig-caption {
+  margin-top: 0.55rem;
+  font-size: 0.78rem;
+  color: #666;
+  text-align: center;
+}
+
+/* ---------- 本章思维导图（mermaid 容器） ---------- */
+.mind-map {
+  margin: 1.2rem 0 1.6rem;
+  padding: 0.9rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(13, 17, 32, 0.5);
+}
+.mind-map .mermaid { background: transparent; }
+
+/* ---------- 打个比方 / 提示块 ---------- */
+.analogy {
+  margin: 1.3rem 0;
+  padding: 1.1rem 1.3rem;
+  border-radius: 14px;
+  border: 1px solid rgba(61, 220, 151, 0.30);
+  background: linear-gradient(120deg, rgba(20, 48, 40, 0.55), rgba(13, 17, 32, 0.55));
+}
+.analogy h4 {
+  margin: 0 0 0.5rem;
+  color: #5ad1a8;
+  font-size: 0.95rem;
+}
+.analogy p { margin: 0; font-size: 0.88rem; line-height: 1.8; }
+
+/* ---------- 上下章导航 ---------- */
+.chapter-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2.6rem;
+  padding-top: 1.3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.chapter-nav a {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  text-decoration: none !important;
+  transition: all 0.15s ease;
+}
+.chapter-nav a:hover {
+  background: rgba(109, 177, 255, 0.22);
+  border-color: rgba(109, 177, 255, 0.5);
+}
+.chapter-nav .nav-next { margin-left: auto; }
+
+/* ---------- 深挖条 ---------- */
+.dig-deeper {
+  margin: 1.4rem 0;
+  padding: 1rem 1.3rem;
+  border-radius: 14px;
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+.dig-deeper h4 { margin: 0 0 0.4rem; font-size: 0.92rem; color: #7db4ff; }
+
+/* =========================================================
+   互动演示：Agent 运行流程
+   ========================================================= */
+.agent-demo {
+  margin: 1.6rem 0 2.2rem;
+  padding: 1.5rem 1.6rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(circle at 90% 0%, rgba(77, 159, 255, 0.12), transparent 45%),
+    rgba(13, 17, 32, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.agent-demo h3 { margin: 0 0 0.3rem; font-size: 1.2rem; }
+.agent-demo .demo-sub { margin: 0 0 1rem; color: var(--md-default-fg-color--light); font-size: 0.85rem; }
+
+/* 图例 */
+.demo-legend { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 1.1rem; font-size: 0.78rem; }
+.demo-legend span { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--md-default-fg-color--light); }
+.demo-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+
+/* 节点流 */
+.demo-flow { display: flex; flex-direction: column; gap: 0.55rem; }
+.demo-node {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 0.4;
+  transition: all 0.35s ease;
+}
+.demo-node .step-num {
+  font-weight: 700;
+  font-size: 0.8rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 1.5rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--md-default-fg-color--lighter);
+}
+.demo-node .node-name { font-size: 0.9rem; font-weight: 600; flex: 1; }
+.demo-node .node-desc { font-size: 0.78rem; color: var(--md-default-fg-color--lighter); }
+.demo-node .role-tag {
+  font-size: 0.68rem;
+  padding: 0.14rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  border: 1px solid;
+}
+/* 三色角色 */
+.role-brain { color: #6db1ff; border-color: rgba(77, 159, 255, 0.45); background: rgba(77, 159, 255, 0.12); }
+.role-eye   { color: #c8a6ff; border-color: rgba(160, 107, 255, 0.45); background: rgba(160, 107, 255, 0.12); }
+.role-hand  { color: #5ad1a8; border-color: rgba(61, 220, 151, 0.40); background: rgba(61, 220, 151, 0.10); }
+.dot.brain { background: #4d9fff; }
+.dot.eye   { background: #a06bff; }
+.dot.hand  { background: #3ddc97; }
+
+.demo-node.active {
+  opacity: 1;
+  transform: translateX(6px);
+  border-color: rgba(109, 177, 255, 0.55);
+  background: rgba(24, 33, 62, 0.75);
+  box-shadow: 0 0 18px rgba(77, 159, 255, 0.25);
+}
+.demo-node.done { opacity: 0.78; }
+.demo-node.active .step-num { border-color: #6db1ff; color: #6db1ff; }
+
+/* 日志 */
+.demo-log {
+  min-height: 4.6rem;
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.30);
+  font-size: 0.85rem;
+  line-height: 1.85;
+  color: var(--md-default-fg-color--light);
+}
+.demo-log .log-line { margin: 0.1rem 0; }
+.demo-log .log-line.new { animation: logIn 0.35s ease; }
+@keyframes logIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 控制按钮 */
+.demo-controls { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.demo-controls button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, #4d9fff, #a06bff);
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: opacity 0.15s ease, transform 0.1s ease;
+}
+.demo-controls button:hover { transform: translateY(-1px); }
+.demo-controls button.secondary {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.demo-controls button:disabled { opacity: 0.4; cursor: default; transform: none; }
